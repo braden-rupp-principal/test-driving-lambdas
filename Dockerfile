@@ -7,5 +7,5 @@ RUN pip install --upgrade pip && \
 FROM codercom/code-server:latest
 USER root
 COPY --from=builder /usr/local/ /usr/local
-# RUN apt-get update && apt-get install -y curl
-RUN LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+RUN apt-get update && apt-get install -y zip
+RUN ldconfig /usr/local/lib 

@@ -1,5 +1,6 @@
 services:
   code-server:
+    container_name: codeserver_${PORT}
     build: .
     ports:
       - "${PORT}:8080"
@@ -19,6 +20,7 @@ services:
     environment:
       - SERVICES=iam,lambda,apigateway
       - DEBUG=1
+      - LOCALSTACK_HOSTNAME=localstack_${PORT}
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker-reuse }
       - DOCKER_HOST=unix:///var/run/docker.sock
       - EDGE_PORT=${LOCAL_STACK_EDGE_PORT}

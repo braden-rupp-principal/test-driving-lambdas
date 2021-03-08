@@ -8,4 +8,7 @@ FROM codercom/code-server:latest
 USER root
 COPY --from=builder /usr/local/ /usr/local
 RUN apt-get update && apt-get install -y zip
+RUN aws configure set aws_access_key_id temp && \
+    aws configure set aws_secret_access_key temp && \
+    aws configure set default.region us-east-2
 RUN ldconfig /usr/local/lib 

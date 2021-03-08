@@ -21,6 +21,6 @@ services:
       - DEBUG=1
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker-reuse }
       - DOCKER_HOST=unix:///var/run/docker.sock
-      - EDGE_PORT=localstack_${PORT}
+      - EDGE_PORT=${LOCAL_STACK_EDGE_PORT}
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"

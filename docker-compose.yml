@@ -1,0 +1,52 @@
+services:
+  code-server:
+    build: .
+    ports:
+      - "${PORT}:8080"
+    volumes:
+      - "$HOME/.config:/home/coder/.config"
+      - "~/workspace/${PORT}:/home/coder/project"
+    environment:
+      - DOCKER_USER=$USER
+      - USER=$USER
+    command: code-server
+  # code-server-2:
+  #   image: codercom/code-server:latest
+  #   ports:
+  #     - 8082:8080
+  #   volumes:
+  #     - "$HOME/.config:/home/coder/.config"
+  #     - "~/${PWD}:/home/coder/project"
+  #   environment:
+  #     - DOCKER_USER=$USER
+  #   command: code-server 
+  # localstack:
+  #   image: localstack/localstack
+  #   ports:
+  #     - "4566:4566"
+  #     - "4567:4567"
+  #     - "4571:4571"
+  #     - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
+  #   environment:
+  #     - SERVICES=${SERVICES-lambda,apigateway }
+  #     - DEBUG=${DEBUG- }
+  #     - DATA_DIR=${DATA_DIR- }
+  #     - PORT_WEB_UI=${PORT_WEB_UI- }
+  #     - LAMBDA_EXECUTOR=docker 
+  #     - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+  #     - DOCKER_HOST=unix:///var/run/docker.sock
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "${LOCAL_STACK_EDGE_PORT}:${LOCAL_STACK_EDGE_PORT}"
+    environment:
+      - SERVICES=iam,lambda,apigateway
+      - DEBUG=1
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker-reuse }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - EDGE_PORT=${LOCAL_STACK_EDGE_PORT}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"

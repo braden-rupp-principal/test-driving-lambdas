@@ -11,7 +11,7 @@ services:
       - DOCKER_USER=$USER
       - USER=$USER
       - LOCALSTACK_HOST=localstack-${PORT}
-    command: code-server
+    command: code-server && cd /home/coder/project/test-driving-lambdas && npm i
   
   localstack:
     container_name: localstack-${PORT}

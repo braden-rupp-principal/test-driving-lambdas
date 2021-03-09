@@ -21,7 +21,7 @@ Configure `$PORT` and `$LOCAL_STACK_EDGE_PORT` as needed
 
 ``` bash
 
-# //from project root
+# from project root
 
 # Building
 PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose build
@@ -40,6 +40,8 @@ Visual studio code will be available at `http:yourdomain:${PORT}`
 
 ``` bash
 
+# from code-server
+
 # build lambda
 npm run build
 
@@ -55,7 +57,6 @@ Lambda Enpoint inside visual studio docker container:
 
 `http://localstack-${PORT}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
 
-Lambda External endpoint: 
+Lambda External endpoint:
 
 `http://yourdomain:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
-

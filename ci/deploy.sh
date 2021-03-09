@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_NAME=api2
+API_NAME=api
 REGION=us-east-1
 STAGE=test
 
@@ -17,7 +17,7 @@ awslocal lambda create-function \
     --runtime nodejs8.10 \
     --handler index.handler \
     --memory-size 128 \
-    --zip-file fileb://api-handler.zip \
+    --zip-file fileb://ci/output/api-handler.zip \
     --role arn:aws:iam::123456:role/irrelevant
 
 [ $? == 0 ] || fail 1 "Failed: AWS / lambda / create-function"
@@ -74,13 +74,6 @@ awslocal apigateway create-deployment \
 
 [ $? == 0 ] || fail 6 "Failed: AWS / apigateway / create-deployment"
 
-ENDPOINT=http://localhost:4566/restapis/${API_ID}/${STAGE}/_user_request_/hellowWorld
+ENDPOINT="http://${LOCALSTACK_HOST}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld"
 
-echo "API available at: ${ENDPOINT}"
-
-echo "Testing GET:"
-curl -i ${ENDPOINT}
-echo " "
-
-echo "Testing POST: (not implemented)"
-# curl -iX POST ${ENDPOINT}
+echo "Test endpoint internally with curl -i ${ENDPOINT}"

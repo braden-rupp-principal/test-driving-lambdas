@@ -24,8 +24,6 @@ awslocal lambda create-function \
 
 LAMBDA_ARN=$(awslocal lambda list-functions --query "Functions[?FunctionName==\`${API_NAME}\`].FunctionArn" --output text --region ${REGION})
 
-echo lambda arn: $LAMBDA_ARN
-
 awslocal apigateway create-rest-api \
     --region ${REGION} \
     --name ${API_NAME}
@@ -39,18 +37,18 @@ awslocal apigateway create-resource \
     --region ${REGION} \
     --rest-api-id ${API_ID} \
     --parent-id ${PARENT_RESOURCE_ID} \
-    --path-part "{somethingId}"
+    --path-part "{name}"
 
 [ $? == 0 ] || fail 3 "Failed: AWS / apigateway / create-resource"
 
-RESOURCE_ID=$(awslocal apigateway get-resources --rest-api-id ${API_ID} --query 'items[?path==`/{somethingId}`].id' --output text --region ${REGION})
+RESOURCE_ID=$(awslocal apigateway get-resources --rest-api-id ${API_ID} --query 'items[?path==`/{name}`].id' --output text --region ${REGION})
 
 awslocal apigateway put-method \
     --region ${REGION} \
     --rest-api-id ${API_ID} \
     --resource-id ${RESOURCE_ID} \
     --http-method GET \
-    --request-parameters "method.request.path.somethingId=true" \
+    --request-parameters "method.request.path.name=true" \
     --authorization-type "NONE" \
 
 [ $? == 0 ] || fail 4 "Failed: AWS / apigateway / put-method"
@@ -74,6 +72,6 @@ awslocal apigateway create-deployment \
 
 [ $? == 0 ] || fail 6 "Failed: AWS / apigateway / create-deployment"
 
-ENDPOINT="http://${LOCALSTACK_HOST}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld"
+ENDPOINT="http://${LOCALSTACK_HOST:=localhost}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld"
 
 echo "Test endpoint internally with curl -i ${ENDPOINT}"

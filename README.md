@@ -21,6 +21,8 @@ Configure `$PORT` and `$LOCAL_STACK_EDGE_PORT` as needed
 
 ``` bash
 
+# //from project root
+
 # Building
 PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose build
 
@@ -39,13 +41,13 @@ Visual studio code will be available at `http:yourdomain:${PORT}`
 ``` bash
 
 # build lambda
-${PROJECT_ROOT}/ci/build.sh
+npm run build
 
 # deploy lambda and create apigateway
-${PROJECT_ROOT}/ci/deploy.sh
+npm run deploy
 
 # update lambda 
-${PROJECT_ROOT}/ci/update.sh
+npm run redeploy
 
 ```
 

@@ -4,10 +4,7 @@ API_NAME=api
 REGION=us-east-1
 
 awslocal lambda update-function-code \
-    --region ${REGION} \
     --function-name ${API_NAME} \
-    --runtime nodejs8.10 \
-    --handler index.handler \
-    --memory-size 128 \
-    --zip-file fileb://ci/output/api-handler.zip \
-    --role arn:aws:iam::123456:role/irrelevant
+    --zip-file fileb://ci/output/api-handler.zip
+
+ENDPOINT="http://${LOCALSTACK_HOST:=localhost}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld"

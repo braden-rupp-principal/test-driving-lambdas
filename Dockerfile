@@ -9,6 +9,8 @@ USER root
 COPY --from=builder /usr/local/ /usr/local
 RUN apt-get update && apt-get install -y zip
 RUN ldconfig /usr/local/lib 
+RUN cd /home/coder/project/test-driving-lambdas && \
+    npm install
 RUN aws configure set aws_access_key_id temp && \
     aws configure set aws_secret_access_key temp && \
     aws configure set default.region us-east-2

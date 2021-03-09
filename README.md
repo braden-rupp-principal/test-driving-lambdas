@@ -49,6 +49,11 @@ ${PROJECT_ROOT}/ci/update.sh
 
 ```
 
-Lambda Enpoint inside visual studio docker container:  `http://localstack-${PORT}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
+Lambda Enpoint inside visual studio docker container:
 
-Lambda External endpoint: `http://yourdomain:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
+`http://localstack-${PORT}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
+
+Lambda External endpoint: 
+
+`http://yourdomain:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
+

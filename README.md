@@ -4,7 +4,7 @@ This project hosts visual studio code server and localstack.
 
 It is configured to use environment variables to run multiple instances on the same host
 
-## Prequisites
+## Prerequisites
 
 1. A machine with Docker
 2. A workspace with the following structure:

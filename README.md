@@ -24,13 +24,13 @@ Configure `$PORT` and `$LOCAL_STACK_EDGE_PORT` as needed
 # from project root
 
 # Building
-PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose build
+PORT=8081 LOCAL_STACK_EDGE_PORT=4566 CURRENT_UID=$(id -u):$(id -g) docker-compose build
 
 # Starting
-PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose up -d
+CURRENT_UID=$(id -u):$(id -g) PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose up -d
 
 # Stopping
-PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose down
+CURRENT_UID=$(id -u):$(id -g) PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose down
 
 ```
 

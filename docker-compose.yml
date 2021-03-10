@@ -9,6 +9,7 @@ services:
     volumes:
       - "$HOME/.config:/home/coder/.config"
       - "~/workspace/${PORT}:/home/coder/project"
+    user: ${CURRENT_UID}
     environment:
       - DOCKER_USER=$USER
       - USER=$USER

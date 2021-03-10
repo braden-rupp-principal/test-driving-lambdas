@@ -3,13 +3,14 @@ WORKDIR /
 RUN pip install --upgrade pip && \
     pip install awscli-local \
     pip install awscli --upgrade
+
 FROM codercom/code-server:latest
-USER root
 COPY --from=builder /usr/local/ /usr/local
-RUN apt-get update && apt-get install -y zip
-RUN curl -sL https://deb.nodesource.com/setup_15.x  | bash -
-RUN apt-get -y install nodejs
-RUN ldconfig /usr/local/lib
+
+ENV NODE_VERSION=15.11.0
+RUN sudo apt-get install -y curl
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+RUN sudo ldconfig /usr/local/   
 RUN aws configure set aws_access_key_id temp && \
     aws configure set aws_secret_access_key temp && \
     aws configure set default.region us-east-2

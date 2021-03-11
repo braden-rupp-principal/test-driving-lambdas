@@ -8,7 +8,7 @@ FROM codercom/code-server:latest
 COPY --from=builder /usr/local/ /usr/local
 
 ENV NODE_VERSION=15.11.0
-RUN sudo apt-get install -y curl zip
+RUN sudo apt-get update && sudo apt-get install -y curl zip
 RUN mkdir -p $HOME/.nvm 
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ENV SHELL /bin/bash

@@ -10,7 +10,8 @@ COPY --from=builder /usr/local/ /usr/local
 ENV NODE_VERSION=15.11.0
 RUN sudo apt-get update && sudo apt-get install -y curl zip
 RUN mkdir -p $HOME/.nvm 
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+RUN sudo curl -sL https://deb.nodesource.com/setup_15.x | sudo bash -
+RUN sudo apt-get install nodejs -y
 ENV SHELL /bin/bash
 RUN sudo ldconfig /usr/local/   
 RUN aws configure set aws_access_key_id temp && \

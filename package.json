@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest ",
-    "build": "tsc && ./ci/build.sh",
-    "deploy": "./ci/deploy.sh",
-    "redeploy": "./ci/update.sh"
+    "build": "tsc",
+    "localstack": "docker run --rm -d -p 4566:4566 -p 4571:4571 --network code-server-network --network-alias localstack -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack",
+    "predeploy": "cd ./localinfra && LOCALSTACK_HOSTNAME=localstack cdklocal bootstrap -v",
+    "deploy": "cd ./localinfra && LOCALSTACK_HOSTNAME=localstack cdklocal deploy --require-approval=never -v",
+    "teardown": "cd ./localinfra && LOCALSTACK_HOSTNAME=localstack cdklocal destroy --require-approval=never -v"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "@babel/preset-typescript": "^7.13.0",
     "@types/aws-lambda": "^8.10.72",
     "@types/jest": "^26.0.21",
+    "@types/node": "^14.14.37",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.4",

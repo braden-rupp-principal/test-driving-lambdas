@@ -2,3 +2,4 @@ out/
 ci/output/
 node_modules
 
+lib/

@@ -1,10 +1,9 @@
-import * as cdk from '@aws-cdk/core';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as apigw from '@aws-cdk/aws-apigateway';
-import * as path from 'path';
+import * as dynamodb from '@aws-cdk/aws-dynamodb';
+import * as lambda from '@aws-cdk/aws-lambda';
+import * as cdk from '@aws-cdk/core';
 import { Construct, StackProps } from "@aws-cdk/core";
-import { BatchInsertCustomResourceConstruct } from "./batchInsertConstruct";
+import * as path from 'path';
 
 export class InfraStack extends cdk.Stack {
 
@@ -29,11 +28,5 @@ export class InfraStack extends cdk.Stack {
     new apigw.LambdaRestApi(this, 'Endpoint', { handler: lambdaHandler });
 
     exchangeRateTable.grantReadWriteData(lambdaHandler);
-
-    const batchInsertCustomResourceConstruct = new BatchInsertCustomResourceConstruct(this, 'batchInsertCustomResourceConstruct', {
-      tableName: tableName,
-      tableArn: exchangeRateTable.tableArn
-    });
-    batchInsertCustomResourceConstruct.node.addDependency(exchangeRateTable);
   }
 }

@@ -3,12 +3,11 @@ import { exchangeRateRepository } from "./exchangeRateRepository";
 
 export async function handler(_event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
-
-  exchangeRateRepository.getExchangeRate('CHF-USD');
+  const rate = await exchangeRateRepository.getExchangeRate('CHF-USD');
 
   return {
     statusCode: 200,
-    body: ''
+    body: rate
   }
 
 }

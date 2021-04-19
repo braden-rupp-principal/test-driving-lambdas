@@ -35,7 +35,7 @@ export default class ExchangeRateRepository {
 export const exchangeRateRepository = new ExchangeRateRepository();
 
 //MOCKING:
-// jest.mock('./ exchangeRateRepository');
+// jest.mock('./exchangeRateRepository');
 // import { mocked } from 'ts-jest/utils';
 
 // mocked(mockExchangeRateRepository.getExchangeRate).mockResolvedValue('Hello');

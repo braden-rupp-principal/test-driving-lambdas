@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "jest ",
-    "integration": "npm run localstack && jest && npm run stop_localstack",
+    "custom": "MYVAR=$(echo hello) && echo $MYVAR",
+    "preintegration": "npm run build && npm run start_localstack && npm run deploy",
+    "integration": "LOCALSTACK_HOSTNAME=localstack TABLE_NAME=ExchangeRateTable LAMBDA_ID=$(aws apigateway get-rest-apis --endpoint-url=http://localstack:4566 | grep id | grep -oP '(\\d|\\w){10}') jest --testMatch **/integration/**/*.integration.test.ts ",
+    "postintegration": "npm run stop_localstack",
     "build": "tsc",
-    "localstack": "docker run --rm -d -p 4566:4566 -p 4571:4571 --name localstack --network code-server-network --network-alias localstack -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack -e DEBUG=1 --name localstack",
+    "start_localstack": "docker run --rm -d -p 4566:4566 -p 4571:4571 --name localstack --network code-server-network --network-alias localstack -e SERVICES=iam,lambda,dynamodb,apigateway,sts,s3,cloudwatch,cloudformation -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack --name localstack",
     "stop_localstack": "docker container stop $(docker container ls -q --filter name=localstack*)",
-    "predeploy": "cd ./infra && LOCALSTACK_HOSTNAME=localstack cdklocal bootstrap -v",
+    "predeploy": "cd ./infra && npm run build && LOCALSTACK_HOSTNAME=localstack cdklocal bootstrap -v",
     "deploy": "cd ./infra && LOCALSTACK_HOSTNAME=localstack cdklocal deploy --require-approval=never -v",
     "teardown": "cd ./infra && LOCALSTACK_HOSTNAME=localstack cdklocal destroy --force -v"
   },
@@ -28,6 +31,7 @@
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-typescript": "^7.13.0",
+    "@types/aws-lambda": "^8.10.75",
     "@types/jest": "^26.0.21",
     "@types/node": "^14.14.37",
     "axios": "^0.21.1",
@@ -38,6 +42,19 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "aws-sdk": "^2.888.0"
+    "aws-sdk": "^2.888.0",
+    "bluebird": "^3.7.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/src/**/*.test.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "lib",
+      "infra/lib",
+      "infra/cdk.out"
+    ]
   }
 }

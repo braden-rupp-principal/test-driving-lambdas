@@ -28,7 +28,7 @@ export class InfraStack extends cdk.Stack {
 
     new apigw.LambdaRestApi(this, 'Endpoint', { handler: lambdaHandler });
 
-    exchangeRateTable.grantReadData(lambdaHandler);
+    exchangeRateTable.grantReadWriteData(lambdaHandler);
 
     const batchInsertCustomResourceConstruct = new BatchInsertCustomResourceConstruct(this, 'batchInsertCustomResourceConstruct', {
       tableName: tableName,

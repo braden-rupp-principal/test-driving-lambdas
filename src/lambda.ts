@@ -1,18 +1,14 @@
-import { exchangeRateRepository } from './ exchangeRateRepository';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { exchangeRateRepository } from "./exchangeRateRepository";
 
-const handler = async (event) => {
+export async function handler(_event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
-  console.log("request:", JSON.stringify(event, undefined, 2));
 
-  const stuff = await exchangeRateRepository.getExchangeRate();
-
-  console.log('STUFFFF', stuff);
+  exchangeRateRepository.getExchangeRate('CHF-USD');
 
   return {
     statusCode: 200,
-    headers: { "Content-Type": "text/plain" },
-    body: stuff
-  };
-};
+    body: ''
+  }
 
-module.exports = { handler };
+}

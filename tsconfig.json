@@ -11,5 +11,5 @@
       "outDir": "lib",
       "skipLibCheck": true
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "integration/**/*"]
   }

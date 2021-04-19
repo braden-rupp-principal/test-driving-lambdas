@@ -1,19 +1,12 @@
 # test-driving-lambdas
 
-This project hosts visual studio code server and localstack.
+This is an example project to show how to unit and integration test a lambda with dynamodb using localstack
 
 It is configured to use environment variables to run multiple instances on the same host
 
 ## Prerequisites
 
 1. A machine with Docker
-2. A workspace with the following structure:
-
-``` text
--workspace
-    -port
-        -project
-```
 
 ## Deploying Docker
 

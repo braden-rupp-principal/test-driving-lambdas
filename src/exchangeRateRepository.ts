@@ -4,7 +4,7 @@ const tableName = process.env.TABLE_NAME || '';
 const dynamo = new DynamoDB.DocumentClient({
     apiVersion: '2019.11.21',
     region: 'us-east-2',
-    endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566`
+    endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.MY_LOCALSTACKPORT}`
 });
 
 export default class ExchangeRateRepository {

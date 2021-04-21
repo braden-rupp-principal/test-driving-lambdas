@@ -6,14 +6,14 @@
   "scripts": {
     "test": "jest ",
     "preintegration": "npm run build && npm run start_localstack && npm run deploy",
-    "integration": "LOCALSTACK_HOSTNAME=localstack-${MYPORT} TABLE_NAME=ExchangeRateTable LAMBDA_ID=$(aws apigateway get-rest-apis --endpoint-url=http://localstack-${MYPORT}:4566 | grep id | grep -oP '(\\d|\\w){10}') jest --testMatch **/integration/**/*.integration.test.ts ",
+    "integration": "LOCALSTACK_HOSTNAME=localstack-${MYPORT} TABLE_NAME=ExchangeRateTable LAMBDA_ID=$(aws apigateway get-rest-apis --endpoint-url=http://localstack-${MYPORT}:${MY_LOCALSTACKPORT} | grep id | grep -oP '(\\d|\\w){10}') jest --testMatch **/integration/**/*.integration.test.ts ",
     "postintegration": "npm run stop_localstack",
     "build": "tsc",
-    "start_localstack": "docker run --rm -d -p 4566:4566 -p 4571:4571 --name localstack-${MYPORT} --network code-server-network --network-alias localstack -e SERVICES=iam,lambda,dynamodb,apigateway,sts,s3,cloudwatch,cloudformation -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack",
+    "start_localstack": "docker run --rm -d -p ${MY_LOCALSTACKPORT}:4566 -p 4571:4571 --name localstack-${MYPORT} --network code-server-network --network-alias localstack -e SERVICES=iam,lambda,dynamodb,apigateway,sts,s3,cloudwatch,cloudformation -e EDGE_PORT=${MY_LOCALSTACKPORT} -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack",
     "stop_localstack": "docker container stop $(docker container ls -q --filter name=localstack-${MYPORT}*)",
-    "predeploy": "cd ./infra && npm run build && LOCALSTACK_HOSTNAME=localstack-${MYPORT} cdklocal bootstrap -v",
-    "deploy": "cd ./infra && LOCALSTACK_HOSTNAME=localstack-${MYPORT} cdklocal deploy --require-approval=never -v",
-    "teardown": "cd ./infra && LOCALSTACK_HOSTNAME=localstack-${MYPORT} cdklocal destroy --force -v"
+    "predeploy": "cd ./infra && npm run build && LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} cdklocal bootstrap -v",
+    "deploy": "cd ./infra && LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} cdklocal deploy --require-approval=never -v",
+    "teardown": "cd ./infra && LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} cdklocal destroy --force -v"
   },
   "repository": {
     "type": "git",

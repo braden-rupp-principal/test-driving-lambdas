@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { exchangeRateRepository } from '../src/exchangeRateRepository';
 
-const ENDPOINT = `http://${process.env.LOCALSTACK_HOSTNAME}:4566/restapis/${process.env.LAMBDA_ID}/prod/_user_request_/`;
+const ENDPOINT = `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.MY_LOCALSTACKPORT}/restapis/${process.env.LAMBDA_ID}/prod/_user_request_/`;
 
 afterEach(() => exchangeRateRepository.delete('CHF-USD').catch(console.error));
 

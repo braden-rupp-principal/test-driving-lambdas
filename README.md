@@ -6,50 +6,32 @@ It is configured to use environment variables to run multiple instances on the s
 
 ## Prerequisites
 
-1. A machine with Docker
+1. [Docker](https://docs.docker.com/get-docker/)
+1. [Node.js](https://nodejs.org/en/)
+1. [aws cli v2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+1. [aws-cdk](https://github.com/aws/aws-cdk)
+1. [aws-cdk-local](https://github.com/localstack/aws-cdk-local#readme)
 
-## Deploying Docker
+## Getting Started
 
-Configure `$PORT` and `$LOCAL_STACK_EDGE_PORT` as needed
+Note: The following environment variables need to be configured
 
-``` bash
+`MYPORT` e.g. 8081
+`MY_LOCALSTACKPORT` e.g. 4566
 
-# from project root
+Running Tests
 
-# Building
-PORT=8081 LOCAL_STACK_EDGE_PORT=4566 CURRENT_UID=$(id -u):$(id -g) docker-compose build
+`npm test`
 
-# Starting
-CURRENT_UID=$(id -u):$(id -g) PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose up -d
+Running Integration tests
 
-# Stopping
-CURRENT_UID=$(id -u):$(id -g) PORT=8081 LOCAL_STACK_EDGE_PORT=4566 docker-compose down
+`npm run integration`
 
-```
+Starting Localstack for local testing
 
-Visual studio code will be available at `http:yourdomain:${PORT}`
+`npm run start_localstack` 
+`npm run stop_localstack` 
 
-## Deploying to localstack
+Deploying to localstack
 
-``` bash
-
-# from code-server
-
-# build lambda
-npm run build
-
-# deploy lambda and create apigateway
-npm run deploy
-
-# update lambda 
-npm run redeploy
-
-```
-
-Lambda Enpoint inside visual studio docker container:
-
-`http://localstack-${PORT}:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
-
-Lambda External endpoint:
-
-`http://yourdomain:4566/restapis/${API_ID}/${STAGE}/_user_request_/helloWorld`
+`npm run deploy`

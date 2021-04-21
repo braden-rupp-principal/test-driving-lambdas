@@ -1,7 +1,7 @@
 {
   "name": "test-driving-lambdas",
   "version": "1.0.0",
-  "description": "This project hosts visual studio code server and localstack.",
+  "description": "Workshop for unit and integration testing lambdas.",
   "main": "index.js",
   "scripts": {
     "test": "jest ",
@@ -35,7 +35,6 @@
     "@types/node": "^14.14.37",
     "axios": "^0.21.1",
     "babel-jest": "^26.6.3",
-    "child-process": "^1.0.2",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.4",
     "typescript": "^4.2.3"

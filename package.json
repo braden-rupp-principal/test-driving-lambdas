@@ -41,8 +41,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "aws-sdk": "^2.888.0",
-    "bluebird": "^3.7.2"
+    "aws-sdk": "^2.888.0"
   },
   "jest": {
     "preset": "ts-jest",
@@ -53,7 +52,8 @@
     "testPathIgnorePatterns": [
       "lib",
       "infra/lib",
-      "infra/cdk.out"
+      "infra/cdk.out",
+      "src/completed"
     ]
   }
 }

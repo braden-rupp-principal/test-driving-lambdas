@@ -8,14 +8,14 @@ afterEach(() => exchangeRateRepository.delete('CHF-USD').catch(console.error));
 test('integration test', async () => {
 
   try {
-    await exchangeRateRepository.insert('CHF-USD', '2:1');
+    await exchangeRateRepository.insert('USD-CHF', '2');
 
-    const response = await axios.get(ENDPOINT);
+    const response = await axios.get(ENDPOINT + '/USD?amount=10&to=CHF');
 
-    expect(response.data).toEqual('2:1');
+    expect(response.data).toEqual('20fr');
   } catch (e) {
     console.error(e)
     fail();
   }
-  
+
 });

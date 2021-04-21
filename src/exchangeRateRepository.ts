@@ -38,4 +38,4 @@ export const exchangeRateRepository = new ExchangeRateRepository();
 // jest.mock('./exchangeRateRepository');
 // import { mocked } from 'ts-jest/utils';
 
-// mocked(mockExchangeRateRepository.getExchangeRate).mockResolvedValue('Hello');
+// mocked(mockExchangeRateRepository.getExchangeRate).mockResolvedValue('2');

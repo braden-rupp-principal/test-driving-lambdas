@@ -6,9 +6,9 @@ Example:
 
 `/${currency}?amount=${amount}&to=${currency}`
 
-```
+``` bash
 
-#exchange rates: CHF-USD=.5 USD-CHF=2
+# exchange rates: CHF-USD=.5 USD-CHF=2
 
 GET /USD?amount=10&to=CHF
     20fr

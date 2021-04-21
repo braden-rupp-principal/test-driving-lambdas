@@ -11,10 +11,16 @@ Example:
 # exchange rates: CHF-USD=".5" USD-CHF="2"
 
 GET /USD?amount=10&to=CHF
-    20fr
+    {
+        statusCode: 200,
+        body: "20fr"
+    }
 
 GET /CHF?amount=10&to=USD
-    $5
+     {
+        statusCode: 200,
+        body: "$5"
+    }
 }
 
 ```

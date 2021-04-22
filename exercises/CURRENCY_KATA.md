@@ -1,6 +1,6 @@
 # currency-kata
 
-1. Make an api with a path variable `currency` (USD | CHF) that accepts query paramters: `amount` and `to` that returns a 200 response with the formated converted amount in the body given an exchange rate (e.g. ".5" | "2" ) via the `exchangeRateRepository`
+1. Make an api with a path variable `currency` (USD | CHF) that accepts query paramters: `amount` and `to` (USD | CHF) that returns a 200 response with the formated converted amount in the body given an exchange rate (e.g. ".5" | "2" ) via the `exchangeRateRepository`
 
 Example: 
 

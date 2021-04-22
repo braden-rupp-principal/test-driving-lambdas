@@ -4,19 +4,19 @@
 
 Example: 
 
-`/${currency}?amount=${amount}&to=${currency}`
+`/convert/${currency}?amount=${amount}&to=${currency}`
 
 ``` bash
 
 # exchange rates: CHF-USD=".5" USD-CHF="2"
 
-GET /USD?amount=10&to=CHF
+GET /convert/USD?amount=10&to=CHF
     {
         statusCode: 200,
         body: "20fr"
     }
 
-GET /CHF?amount=10&to=USD
+GET /convert/CHF?amount=10&to=USD
      {
         statusCode: 200,
         body: "$5"

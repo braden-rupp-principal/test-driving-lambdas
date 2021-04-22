@@ -4,7 +4,7 @@ const tableName = process.env.TABLE_NAME || '';
 const dynamo = new DynamoDB.DocumentClient({
     apiVersion: '2019.11.21',
     region: 'us-east-2',
-    endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.MY_LOCALSTACKPORT}`
+    endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.EDGE_PORT}`
 });
 
 export default class ExchangeRateRepository {
@@ -25,7 +25,7 @@ export default class ExchangeRateRepository {
         return await dynamo.delete({ TableName: tableName, Key: { id: exchange } }).promise();
     }
 
-    async getExchangeRate(exchange: 'CHF-USD' | 'USD-CHF'): Promise<string> {
+    async getExchangeRate(exchange: string): Promise<string> {
         const result = await dynamo.get({ TableName: tableName, Key: { id: exchange } }).promise();
         return result.Item.rate;
     }
@@ -34,8 +34,10 @@ export default class ExchangeRateRepository {
 
 export const exchangeRateRepository = new ExchangeRateRepository();
 
-//MOCKING:
+// MOCKING:
 // jest.mock('./exchangeRateRepository');
 // import { mocked } from 'ts-jest/utils';
 
 // mocked(mockExchangeRateRepository.getExchangeRate).mockResolvedValue('2');
+
+// export default () => console.log

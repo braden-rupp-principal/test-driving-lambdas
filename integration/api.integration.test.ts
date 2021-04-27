@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { exchangeRateRepository } from '../src/exchangeRateRepository';
+import { exchangeRateRepository } from '../src/dynamo/exchangeRateRepository';
 
 const ENDPOINT = `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.EDGE_PORT}/restapis/${process.env.LAMBDA_ID}/prod/_user_request_/`;
 

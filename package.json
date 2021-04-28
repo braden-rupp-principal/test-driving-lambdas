@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest ",
+    "ot": "jest --testMatch **/integration/**/*.integration.test.ts",
     "preintegration": "npm run start_localstack && npm run build && npm run deploy",
     "integration": "(LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} TABLE_NAME=ExchangeRateTable LAMBDA_ID=$(aws apigateway get-rest-apis --endpoint-url=http://localstack-${MYPORT}:${MY_LOCALSTACKPORT} | grep id | grep -oP '(\\d|\\w){10}') jest --testMatch **/integration/**/*.integration.test.ts) || npm run stop_localstack",
     "postintegration": "npm run stop_localstack",
     "build": "tsc",
-    "start_localstack": "sudo docker run --rm -d -p ${MY_LOCALSTACKPORT}:${MY_LOCALSTACKPORT} --name localstack-${MYPORT} --network code-server-network --network-alias localstack -e SERVICES=iam,lambda,dynamodb,apigateway,sts,s3,cloudwatch,cloudformation -e EDGE_PORT=${MY_LOCALSTACKPORT} -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack",
+    "start_localstack": "sudo docker run --rm -d -p ${MY_LOCALSTACKPORT}:${MY_LOCALSTACKPORT} --name localstack-${MYPORT} --network code-server-network --network-alias localstack -e EDGE_PORT=${MY_LOCALSTACKPORT} -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack",
     "stop_localstack": "sudo docker container stop $(sudo docker container ls -q --filter name=localstack-${MYPORT}*)",
     "predeploy": "cd ./infra && npm run build && LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} cdklocal bootstrap -v",
     "deploy": "cd ./infra && LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} cdklocal deploy --require-approval=never -v"
@@ -32,6 +33,7 @@
     "@types/aws-lambda": "^8.10.75",
     "@types/jest": "^26.0.21",
     "@types/node": "^14.14.37",
+    "aws-cli-js": "^2.2.2",
     "axios": "^0.21.1",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
@@ -39,7 +41,8 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "aws-sdk": "^2.888.0"
+    "aws-sdk": "^2.888.0",
+    "module": "^1.2.5"
   },
   "jest": {
     "preset": "ts-jest",

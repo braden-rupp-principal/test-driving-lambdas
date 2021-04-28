@@ -1,7 +1,13 @@
-import axios from 'axios';
 import { SNS } from 'aws-sdk';
+import { exchangeRateRepository } from '../src/dynamo/exchangeRateRepository';
+import { getSubcriptionForFunctionName } from './helper';
 
-const ENDPOINT = `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.EDGE_PORT}/restapis/${process.env.LAMBDA_ID}/prod/_user_request_/`;
+
+let topicArn;
+
+beforeAll(async () => {
+  topicArn = await getSubcriptionForFunctionName('test-name');
+});
 
 const sns = new SNS({
   apiVersion: '2019.11.21',
@@ -12,14 +18,16 @@ const sns = new SNS({
 test('should insert a subscription', async () => {
 
   try {
-    sns.publish({
-      
-    })
-    await exchangeRateRepository.insert('USD-CHF', '2');
+    await sns.publish({
+      TopicArn: topicArn,
+      Message: JSON.stringify({ currency: 'CHF-USD', exchangeRate: '8' })
+    }).promise();
 
-    const response = await axios.get(ENDPOINT + 'convert/USD?amount=10&to=CHF');
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-    expect(response.data).toEqual('20fr');
+    const actualExchangeRate = await exchangeRateRepository.getExchangeRate('CHF-USD');
+    expect(actualExchangeRate).toEqual('8');
+
   } catch (e) {
     console.error(e)
     fail();

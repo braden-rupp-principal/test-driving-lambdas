@@ -1,7 +1,7 @@
 
 import { SNSEvent, SNSEventRecord } from 'aws-lambda';
-import { exchangeRateRepository as mockExchangeRateRepository } from '../dynamo/exchangeRateRepository';
-import { handler } from './lambda';
+import { exchangeRateRepository as mockExchangeRateRepository } from './dynamo/exchangeRateRepository';
+import { handler } from './subscription';
 
 
 jest.mock('../dynamo/exchangeRateRepository');

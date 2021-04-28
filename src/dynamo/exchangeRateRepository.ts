@@ -1,6 +1,6 @@
 import { DynamoDB } from 'aws-sdk';
 
-const tableName = process.env.TABLE_NAME || '';
+const tableName = process.env.TABLE_NAME || 'ExchangeRateTable';
 const dynamo = new DynamoDB.DocumentClient({
     apiVersion: '2019.11.21',
     region: 'us-east-2',

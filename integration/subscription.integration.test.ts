@@ -7,6 +7,7 @@ let topicArn;
 
 beforeAll(async () => {
   topicArn = await getSubcriptionForFunctionName('test-name');
+  console.log('TOPIC', topicArn)
 });
 
 const sns = new SNS({
@@ -23,7 +24,7 @@ test('should insert a subscription', async () => {
       Message: JSON.stringify({ currency: 'CHF-USD', exchangeRate: '8' })
     }).promise();
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     const actualExchangeRate = await exchangeRateRepository.getExchangeRate('CHF-USD');
     expect(actualExchangeRate).toEqual('8');

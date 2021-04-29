@@ -4,7 +4,7 @@ import { exchangeRateRepository as mockExchangeRateRepository } from './dynamo/e
 import { handler } from './subscription';
 
 
-jest.mock('../dynamo/exchangeRateRepository');
+jest.mock('./dynamo/exchangeRateRepository');
 
 test('should insert the new exchange rate', async () => {
 

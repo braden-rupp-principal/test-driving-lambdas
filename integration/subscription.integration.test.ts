@@ -7,7 +7,6 @@ let topicArn;
 
 beforeAll(async () => {
   topicArn = await getSubcriptionForFunctionName('test-name');
-  console.log('TOPIC', topicArn)
 });
 
 const sns = new SNS({

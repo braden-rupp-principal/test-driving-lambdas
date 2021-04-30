@@ -7,9 +7,9 @@
     "test": "jest ",
     "ot": "LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} TABLE_NAME=ExchangeRateTable jest --testMatch **/integration/**/*.integration.test.ts",
     "preintegration": "npm run start_localstack && npm run build && npm run deploy",
-    "integration": "(LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} TABLE_NAME=ExchangeRateTable LAMBDA_ID=$(aws apigateway get-rest-apis --endpoint-url=http://localstack-${MYPORT}:${MY_LOCALSTACKPORT} | grep id | grep -oP '(\\d|\\w){10}') jest --testMatch **/integration/**/*.integration.test.ts)",
+    "integration": "(LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} TABLE_NAME=ExchangeRateTable jest --testMatch **/integration/**/*.integration.test.ts)",
     "build": "tsc",
-    "start_localstack": "sudo docker run --rm -d -p ${MY_LOCALSTACKPORT}:${MY_LOCALSTACKPORT} --name localstack-${MYPORT} --network code-server-network --network-alias localstack-${MYPORT} -e EDGE_PORT=${MY_LOCALSTACKPORT} -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack",
+    "start_localstack": "sudo docker run --rm -d -p ${MY_LOCALSTACKPORT}:${MY_LOCALSTACKPORT} --name localstack-${MYPORT} --network code-server-network --network-alias localstack-${MYPORT} -e EDGE_PORT=${MY_LOCALSTACKPORT} -e LAMBDA_DOCKER_NETWORK=code-server-network -e LAMBDA_EXECUTOR=docker -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack",
     "stop_localstack": "sudo docker container stop $(sudo docker container ls -q --filter name=localstack-${MYPORT}*)",
     "predeploy": "cd ./infra && npm run build && LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} cdklocal bootstrap -v",
     "deploy": "cd ./infra && LOCALSTACK_HOSTNAME=localstack-${MYPORT} EDGE_PORT=${MY_LOCALSTACKPORT} cdklocal deploy --require-approval=never -v"

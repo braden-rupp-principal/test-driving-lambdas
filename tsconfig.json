@@ -3,13 +3,14 @@
       "lib": ["es2019"],
       "removeComments": true,
       "moduleResolution": "node",
+      "module": "commonjs",
       "esModuleInterop": true,
       "noUnusedLocals": true,
       "noUnusedParameters": true,
       "sourceMap": true,
-      "target": "es5",
+      "target": "ES2017",
       "outDir": "lib",
       "skipLibCheck": true
     },
-    "include": ["src/**/*", "integration/**/*"]
+    "include": ["src", "integration"]
   }

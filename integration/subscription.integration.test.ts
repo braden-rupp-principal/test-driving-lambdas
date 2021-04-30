@@ -1,7 +1,6 @@
 import { SNS } from 'aws-sdk';
 import { exchangeRateRepository } from '../src/dynamo/exchangeRateRepository';
-import { getSubcriptionForFunctionName } from './helper';
-
+import { ENDPOINT, getSubcriptionForFunctionName } from './helper';
 
 let topicArn;
 
@@ -9,11 +8,7 @@ beforeAll(async () => {
   topicArn = await getSubcriptionForFunctionName('test-name');
 });
 
-const sns = new SNS({
-  apiVersion: '2019.11.21',
-  region: 'us-east-2',
-  endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.EDGE_PORT}`
-});
+const sns = new SNS({ region: 'us-east-2', endpoint: ENDPOINT });
 
 test('should insert a subscription', async () => {
 

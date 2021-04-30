@@ -2,7 +2,7 @@ import { Aws } from 'aws-cli-js';
 
 const aws = new Aws();
 
-const ENDPOINT = `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.EDGE_PORT}`;
+export const ENDPOINT = `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.EDGE_PORT}`;
 
 export const getSubcriptionForFunctionName = async (functionName: string): Promise<string> => {
     const response = await aws.command(`sns list-subscriptions \

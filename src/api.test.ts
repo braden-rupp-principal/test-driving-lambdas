@@ -10,10 +10,6 @@ test('it should return a rate for /convert/USD?to=CHF?amount=10', async () => {
 
 })
 
-test('it should return a rate for /convert/CHF?to=USD?amount=20', async () => {
-
-})
-
 const givenEvent = (
     pathParameters: APIGatewayProxyEventPathParameters,
     queryStringParameters: APIGatewayProxyEventQueryStringParameters): APIGatewayProxyEvent => {

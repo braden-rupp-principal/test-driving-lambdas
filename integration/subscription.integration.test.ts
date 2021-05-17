@@ -15,13 +15,13 @@ test('should insert a subscription', async () => {
   try {
     await sns.publish({
       TopicArn: topicArn,
-      Message: JSON.stringify({ currency: 'CHF-USD', exchangeRate: '9' })
+      Message: JSON.stringify({ currency: 'CHF-USD', exchangeRate: '2' })
     }).promise();
 
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     const actualExchangeRate = await exchangeRateRepository.getExchangeRate('CHF-USD');
-    expect(actualExchangeRate).toEqual('10');
+    expect(actualExchangeRate).toEqual(2);
 
   } catch (e) {
     console.error(e)

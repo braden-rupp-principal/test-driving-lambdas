@@ -7,27 +7,29 @@ const dynamo = new DynamoDB.DocumentClient({
     endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:${process.env.EDGE_PORT}`
 });
 
+export type ExchangeRateKey = 'CHF-USD' | 'USD-CHF';
+
 export default class ExchangeRateRepository {
 
     async scan() {
         return await dynamo.scan({ TableName: tableName }).promise();
     }
 
-    async insert(exchange: 'CHF-USD' | 'USD-CHF', rate: string) {
+    async insert(exchangeRateKey: ExchangeRateKey, rate: number) {
         const result = await dynamo.put({
             TableName: tableName,
-            Item: { id: exchange, rate: rate }
+            Item: { id: exchangeRateKey, rate: rate.toString() }
         }).promise();
         return result;
     }
 
-    async delete(exchange: 'CHF-USD' | 'USD-CHF') {
-        return await dynamo.delete({ TableName: tableName, Key: { id: exchange } }).promise();
+    async delete(exchangeRateKey: ExchangeRateKey) {
+        return await dynamo.delete({ TableName: tableName, Key: { id: exchangeRateKey } }).promise();
     }
 
-    async getExchangeRate(exchange: string): Promise<string> {
-        const result = await dynamo.get({ TableName: tableName, Key: { id: exchange } }).promise();
-        return result.Item.rate;
+    async getExchangeRate(exchangeRateKey: ExchangeRateKey): Promise<number> {
+        const result = await dynamo.get({ TableName: tableName, Key: { id: exchangeRateKey } }).promise();
+        return +result.Item.rate;
     }
 
 };

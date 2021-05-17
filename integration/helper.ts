@@ -12,7 +12,6 @@ export const getSubcriptionForFunctionName = async (functionName: string): Promi
 }
 
 export const getLambdaEndpointRoot = async (): Promise<string> => {
-    console.log("HELLO WORLD!")
     const response = await aws.command(`apigateway get-rest-apis  \
          --endpoint-url ${ENDPOINT}`);
     const id = response.object.items[0].id;

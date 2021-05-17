@@ -7,6 +7,8 @@ export const handler = async (_event: SNSEvent) => {
     const message = _event.Records[0].Sns.Message;
     const { currency, exchangeRate } = JSON.parse(message);
 
+    console.log(message);
+
     try {
         await exchangeRateRepository.insert(currency, exchangeRate);
     }
@@ -14,5 +16,4 @@ export const handler = async (_event: SNSEvent) => {
         console.error(e);
         throw e;
     }
-
 }

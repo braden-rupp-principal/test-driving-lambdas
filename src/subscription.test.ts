@@ -1,17 +1,16 @@
-
-import { SNSEvent, SNSEventRecord } from 'aws-lambda';
-import { exchangeRateRepository as mockExchangeRateRepository } from './dynamo/exchangeRateRepository';
+import { SNSEvent, SNSEventRecord } from "aws-lambda";
+import { exchangeRateRepository as mockExchangeRateRepository } from "./dynamo/exchangeRateRepository";
 import { handler } from './subscription';
 
+jest.mock("./dynamo/exchangeRateRepository");
 
-jest.mock('./dynamo/exchangeRateRepository');
+test('should insert a exchange rate into dynamo db', () => {
 
-test('should insert the new exchange rate', async () => {
+    const event = givenSnsEventWithMessage({ currency: 'CHF-USD', exchangeRate: '2' })
 
-    const snsEvent = givenSnsEventWithMessage({ currency: 'CHF-USD', exchangeRate: '3' });
-    await handler(snsEvent);
+    handler(event);
 
-    expect(mockExchangeRateRepository.insert).toHaveBeenCalledWith('CHF-USD', '3');
+    expect(mockExchangeRateRepository.insert).toHaveBeenCalledWith('CHF-USD', '2');
 
 });
 

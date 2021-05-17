@@ -15,10 +15,10 @@ export class InfraStack extends cdk.Stack {
     super(scope, id, props);
 
     const exchangeRateTable = this.createDynamoDbTable();
-    const restApi = this.createRestApi();
+    // const restApi = this.createRestApi();
     const subscriptionHandler = this.createSubscriptionHandler();
 
-    exchangeRateTable.grantReadWriteData(restApi);
+    // exchangeRateTable.grantReadWriteData(restApi);
     exchangeRateTable.grantReadWriteData(subscriptionHandler);
   }
 
@@ -37,7 +37,7 @@ export class InfraStack extends cdk.Stack {
 
     const subscriptionHandler = new lambda.Function(this, 'SubscriptionHandler', {
       runtime: lambda.Runtime.NODEJS_14_X,
-      functionName: 'test-name',
+      functionName: 'test-subscription',
       code: lambda.Code.fromAsset(path.join(__dirname, '..', '..', 'lib', 'src')),
       handler: 'subscription.handler',
       environment: { TABLE_NAME: TABLE_NAME }

@@ -4,6 +4,8 @@ import { ENDPOINT, getSubcriptionForFunctionName } from './helper';
 
 let topicArn;
 
+jest.setTimeout(8000);
+
 beforeAll(async () => {
   topicArn = await getSubcriptionForFunctionName('test-subscription');
 });
@@ -15,17 +17,16 @@ test('should insert a subscription', async () => {
   try {
     await sns.publish({
       TopicArn: topicArn,
-      Message: JSON.stringify({ currency: 'CHF-USD', exchangeRate: '2' })
+      Message: JSON.stringify({ exchangeRateKey: 'CHF-USD', exchangeRate: '2' })
     }).promise();
 
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 5000));
 
     const actualExchangeRate = await exchangeRateRepository.getExchangeRate('CHF-USD');
     expect(actualExchangeRate).toEqual(2);
 
   } catch (e) {
-    console.error(e)
-    fail();
+    fail(e);
   }
 
 });

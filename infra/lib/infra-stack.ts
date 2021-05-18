@@ -15,10 +15,10 @@ export class InfraStack extends cdk.Stack {
     super(scope, id, props);
 
     const exchangeRateTable = this.createDynamoDbTable();
-    const restApi = this.createRestApi();
+    // const restApi = this.createRestApi();
     const subscriptionHandler = this.createSubscriptionHandler();
 
-    exchangeRateTable.grantReadWriteData(restApi);
+    // exchangeRateTable.grantReadWriteData(restApi);
     exchangeRateTable.grantReadWriteData(subscriptionHandler);
   }
 
@@ -50,21 +50,6 @@ export class InfraStack extends cdk.Stack {
 
   private createRestApi() {
 
-    const apiHandler = new lambda.Function(this, 'ExchangeRateHandler', {
-      runtime: lambda.Runtime.NODEJS_14_X,
-      code: lambda.Code.fromAsset(path.join(__dirname, '..', '..', 'lib', 'src')),
-      handler: 'api.handler',
-      environment: { TABLE_NAME: TABLE_NAME }
-    });
-
-    const apigateway = new apigw.LambdaRestApi(this, 'Endpoint', { handler: apiHandler, proxy: false });
-
-    const resource = apigateway.root.addResource('convert');
-    resource.addMethod('GET');
-
-    const currencyPath = resource.addResource('{currency}');
-    currencyPath.addMethod('GET');
-
-    return apiHandler;
+    //add code here
   }
 }

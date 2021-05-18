@@ -7,8 +7,7 @@ jest.mock('./dynamo/exchangeRateRepository')
 
 test('it should return a rate for /convert/USD?to=CHF?amount=10', async () => {
 
-
-})
+});
 
 const givenEvent = (
     pathParameters: APIGatewayProxyEventPathParameters,
